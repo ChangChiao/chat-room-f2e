@@ -25,7 +25,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>; // 或者您的 loading 組件
+    return <div>Loading...</div>;
   }
 
   if (!isAuthenticated) {
