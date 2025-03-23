@@ -17,7 +17,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
       try {
         await userApi.getCurrentUser();
         setIsAuthenticated(true);
-      } catch (error) {
+      } catch (error: unknown) {
+        console.error(error);
         setIsAuthenticated(false);
       }
     };

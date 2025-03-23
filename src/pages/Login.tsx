@@ -4,10 +4,10 @@ const AuthForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F0F8FF]">
+    <div className="min-h-screen flex items-center justify-center bg-secondary">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-[#2E6C5D]">
+          <h1 className="text-2xl font-bold text-primary">
             {isSignUp ? "Sign Up" : "Hello! Welcome to plantland"}
           </h1>
         </div>
@@ -16,14 +16,14 @@ const AuthForm = () => {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-[#4B6F5D]"
+              className="block text-sm font-medium text-primary-hover"
             >
               Email
             </label>
             <input
               type="email"
               id="email"
-              className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+              className="w-full p-3 mt-1 border border-border rounded-lg"
               placeholder="Enter your email"
             />
           </div>
@@ -32,14 +32,14 @@ const AuthForm = () => {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-[#4B6F5D]"
+              className="block text-sm font-medium text-primary-hover"
             >
               Password
             </label>
             <input
               type="password"
               id="password"
-              className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+              className="w-full p-3 mt-1 border border-border rounded-lg"
               placeholder="Enter your password"
             />
           </div>
@@ -49,14 +49,14 @@ const AuthForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="confirm-password"
-                className="block text-sm font-medium text-[#4B6F5D]"
+                className="block text-sm font-medium text-primary-hover"
               >
                 Confirm Password
               </label>
               <input
                 type="password"
                 id="confirm-password"
-                className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+                className="w-full p-3 mt-1 border border-border rounded-lg"
                 placeholder="Confirm your password"
               />
             </div>
@@ -67,14 +67,14 @@ const AuthForm = () => {
             <div className="mb-4">
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium text-[#4B6F5D]"
+                className="block text-sm font-medium text-primary-hover"
               >
                 Phone
               </label>
               <input
                 type="text"
                 id="phone"
-                className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+                className="w-full p-3 mt-1 border border-border rounded-lg"
                 placeholder="Enter your phone number"
               />
             </div>
@@ -83,7 +83,7 @@ const AuthForm = () => {
           {/* Forgot password link */}
           {!isSignUp && (
             <div className="text-sm text-right mb-4">
-              <a href="#" className="text-[#2E6C5D] hover:text-[#4B6F5D]">
+              <a href="#" className="text-primary hover:text-primary-hover">
                 Forgot Password?
               </a>
             </div>
@@ -92,7 +92,7 @@ const AuthForm = () => {
           {/* Submit button */}
           <button
             type="submit"
-            className="w-full p-3 bg-[#2E6C5D] text-white rounded-lg hover:bg-[#4B6F5D]"
+            className="w-full p-3 bg-primary text-white rounded-lg hover:bg-primary-hover"
           >
             {isSignUp ? "Sign Up" : "Login"}
           </button>
@@ -100,13 +100,13 @@ const AuthForm = () => {
           {/* Social login buttons */}
           {!isSignUp && (
             <div className="mt-6 flex justify-center space-x-4">
-              <button className="w-full p-3 border border-gray-300 rounded-lg text-center">
+              <button className="w-full p-3 border border-border rounded-lg text-center">
                 <i className="fab fa-facebook"></i> Login with Facebook
               </button>
-              <button className="w-full p-3 border border-gray-300 rounded-lg text-center">
+              <button className="w-full p-3 border border-border rounded-lg text-center">
                 <i className="fab fa-google"></i> Login with Google
               </button>
-              <button className="w-full p-3 border border-gray-300 rounded-lg text-center">
+              <button className="w-full p-3 border border-border rounded-lg text-center">
                 <i className="fab fa-apple"></i> Login with Apple
               </button>
             </div>
@@ -114,13 +114,13 @@ const AuthForm = () => {
 
           {/* Switch between Login and SignUp */}
           <div className="mt-6 text-center">
-            <span className="text-sm text-[#4B6F5D]">
+            <span className="text-sm text-primary-hover">
               {isSignUp
                 ? "Already have an account? "
                 : "Don't have an account? "}
               <button
                 type="button"
-                className="text-[#2E6C5D] font-semibold"
+                className="text-primary font-semibold"
                 onClick={() => setIsSignUp(!isSignUp)}
               >
                 {isSignUp ? "Login" : "Sign Up"}
