@@ -10,13 +10,13 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#2E6C5D",
-          hover: "#4B6F5D",
+          500: "#2E6C5D",
+          600: "#4B6F5D",
         },
         secondary: {
           DEFAULT: "#F0F8FF",
         },
-        border: {
+        borderColorCustom: {
           DEFAULT: "#E5E7EB",
         },
       },
