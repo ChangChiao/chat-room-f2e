@@ -11,14 +11,20 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@tailwindcss/vite": "^4.0.14",
     "@types/axios": "^0.14.4",
     "axios": "^1.8.4",
+    "install": "^0.13.0",
     "lint-staged": "^15.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.0",
-    "tailwindcss": "^4.0.14"
+    "tailwindcss": "^4.0.15"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
