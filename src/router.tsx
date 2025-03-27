@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import ChatList from "./pages/ChatList";
 import ChatRoom from "./pages/ChatRoom";
 import NotFound from "./pages/NotFound";
+import AuthFailure from "./pages/AuthFailure";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/auth-failure",
+    element: <AuthFailure />,
   },
   {
     path: "/chat",
