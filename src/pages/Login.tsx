@@ -1,12 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { authApi } from "../services/api";
 
 const AuthForm = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
+  // const loginByGoogle = () => {
+  //   console.log("loginByGoogle");
+  //   userApi.loginByGoogle();
+  // };
+
+  useEffect(() => {
+    authApi.getAuthInfo().then((res) => {
+      console.log(res);
+    });
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("handleSubmit");
+  };
+
   // @ts-expect-error workaround from official docs
-  const myIcon: IconProp = "fa-kit faCoffee";
+  const googleIcon: IconProp = "fa-brands fa-google";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary">
@@ -16,7 +33,7 @@ const AuthForm = () => {
             {isSignUp ? "Sign Up" : "Hello! Welcome to plantland"}
           </h1>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* Email */}
           <div className="mb-4">
             <label
@@ -32,6 +49,24 @@ const AuthForm = () => {
               placeholder="Enter your email"
             />
           </div>
+
+          {/* User Name (only in sign-up) */}
+          {isSignUp && (
+            <div className="mb-4">
+              <label
+                htmlFor="userName"
+                className="block text-sm font-medium text-primary-600"
+              >
+                User Name
+              </label>
+              <input
+                type="text"
+                id="userName"
+                className="w-full p-3 mt-1 border border-borderColorCustom rounded-lg"
+                placeholder="Enter your user name"
+              />
+            </div>
+          )}
 
           {/* Password */}
           <div className="mb-4">
@@ -67,24 +102,6 @@ const AuthForm = () => {
             </div>
           )}
 
-          {/* Phone (only in sign-up) */}
-          {isSignUp && (
-            <div className="mb-4">
-              <label
-                htmlFor="phone"
-                className="block text-sm font-medium text-primary-600"
-              >
-                Phone
-              </label>
-              <input
-                type="text"
-                id="phone"
-                className="w-full p-3 mt-1 border border-borderColorCustom rounded-lg"
-                placeholder="Enter your phone number"
-              />
-            </div>
-          )}
-
           {/* Forgot password link */}
           {!isSignUp && (
             <div className="text-sm text-right mb-4">
@@ -101,36 +118,36 @@ const AuthForm = () => {
           >
             {isSignUp ? "Sign Up" : "Login"}
           </button>
-
-          {/* Social login buttons */}
-          {!isSignUp && (
-            <div className="mt-6 flex justify-center space-x-4">
-              <button className="w-full p-3 border border-borderColorCustom rounded-lg text-center">
-                <i className="fab fa-facebook"></i> Login with Facebook
-              </button>
-              <button className="w-full p-3 border border-borderColorCustom rounded-lg text-center">
-                <i className="fab fa-google"></i> Login with Google
-                <FontAwesomeIcon icon={myIcon} />
-              </button>
-            </div>
-          )}
-
-          {/* Switch between Login and SignUp */}
-          <div className="mt-6 text-center">
-            <span className="text-sm text-primary-600">
-              {isSignUp
-                ? "Already have an account? "
-                : "Don't have an account? "}
-              <button
-                type="button"
-                className="text-primary-500 font-semibold"
-                onClick={() => setIsSignUp(!isSignUp)}
-              >
-                {isSignUp ? "Login" : "Sign Up"}
-              </button>
-            </span>
-          </div>
         </form>
+
+        {/* Social login buttons */}
+        {!isSignUp && (
+          <div className="mt-6 flex justify-center space-x-4">
+            <button className="w-full p-3 border border-borderColorCustom rounded-lg text-center">
+              <i className="fab fa-facebook"></i> Login with Facebook
+            </button>
+            <a href={`${import.meta.env.VITE_API_BASE_URL}/auth/google`}>
+              <button className="w-full p-3 border border-borderColorCustom rounded-lg text-center">
+                <FontAwesomeIcon icon={googleIcon} />
+                Login with Google
+              </button>
+            </a>
+          </div>
+        )}
+
+        {/* Switch between Login and SignUp */}
+        <div className="mt-6 text-center">
+          <span className="text-sm text-primary-600">
+            {isSignUp ? "Already have an account? " : "Don't have an account? "}
+            <button
+              type="button"
+              className="text-primary-500 font-semibold"
+              onClick={() => setIsSignUp(!isSignUp)}
+            >
+              {isSignUp ? "Login" : "Sign Up"}
+            </button>
+          </span>
+        </div>
       </div>
     </div>
   );
