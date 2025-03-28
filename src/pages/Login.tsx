@@ -1,10 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useForm } from "react-hook-form";
 import { authApi } from "../services/api";
 
+interface FormInputs {
+  email: string;
+  userName?: string;
+  password: string;
+  confirmPassword?: string;
+}
+
 const AuthForm = () => {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = React.useState(false);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm<FormInputs>();
 
   // const loginByGoogle = () => {
   //   console.log("loginByGoogle");
@@ -17,9 +32,19 @@ const AuthForm = () => {
     });
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("handleSubmit");
+  const onSubmit = async (data: FormInputs) => {
+    try {
+      if (isSignUp) {
+        // TODO: 實現註冊 API
+        console.log("Sign up data:", data);
+      } else {
+        // TODO: 實現登入 API
+        console.log("Login data:", data);
+      }
+      reset();
+    } catch (error) {
+      console.error("Form submission error:", error);
+    }
   };
 
   // @ts-expect-error workaround from official docs
@@ -33,7 +58,7 @@ const AuthForm = () => {
             {isSignUp ? "Sign Up" : "Hello! Welcome to plantland"}
           </h1>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {/* Email */}
           <div className="mb-4">
             <label
@@ -45,9 +70,23 @@ const AuthForm = () => {
             <input
               type="email"
               id="email"
-              className="w-full p-3 mt-1 border border-borderColorCustom rounded-lg"
+              className={`w-full p-3 mt-1 border rounded-lg ${
+                errors.email ? "border-red-500" : "border-borderColorCustom"
+              }`}
               placeholder="Enter your email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
             />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* User Name (only in sign-up) */}
@@ -62,9 +101,25 @@ const AuthForm = () => {
               <input
                 type="text"
                 id="userName"
-                className="w-full p-3 mt-1 border border-borderColorCustom rounded-lg"
+                className={`w-full p-3 mt-1 border rounded-lg ${
+                  errors.userName
+                    ? "border-red-500"
+                    : "border-borderColorCustom"
+                }`}
                 placeholder="Enter your user name"
+                {...register("userName", {
+                  required: "User name is required",
+                  minLength: {
+                    value: 3,
+                    message: "User name must be at least 3 characters",
+                  },
+                })}
               />
+              {errors.userName && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.userName.message}
+                </p>
+              )}
             </div>
           )}
 
@@ -79,9 +134,23 @@ const AuthForm = () => {
             <input
               type="password"
               id="password"
-              className="w-full p-3 mt-1 border border-borderColorCustom rounded-lg"
+              className={`w-full p-3 mt-1 border rounded-lg ${
+                errors.password ? "border-red-500" : "border-borderColorCustom"
+              }`}
               placeholder="Enter your password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              })}
             />
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Confirm Password (only in sign-up) */}
@@ -96,9 +165,23 @@ const AuthForm = () => {
               <input
                 type="password"
                 id="confirm-password"
-                className="w-full p-3 mt-1 border border-borderColorCustom rounded-lg"
+                className={`w-full p-3 mt-1 border rounded-lg ${
+                  errors.confirmPassword
+                    ? "border-red-500"
+                    : "border-borderColorCustom"
+                }`}
                 placeholder="Confirm your password"
+                {...register("confirmPassword", {
+                  required: "Please confirm your password",
+                  validate: (value: string | undefined) =>
+                    value === watch("password") || "Passwords do not match",
+                })}
               />
+              {errors.confirmPassword && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
             </div>
           )}
 
@@ -142,7 +225,10 @@ const AuthForm = () => {
             <button
               type="button"
               className="text-primary-500 font-semibold"
-              onClick={() => setIsSignUp(!isSignUp)}
+              onClick={() => {
+                setIsSignUp(!isSignUp);
+                reset();
+              }}
             >
               {isSignUp ? "Login" : "Sign Up"}
             </button>
