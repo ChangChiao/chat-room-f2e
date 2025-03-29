@@ -17,9 +17,11 @@ const AuthForm = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
-  } = useForm<FormInputs>();
+  } = useForm<FormInputs>({
+    mode: "onBlur",
+  });
 
   // const loginByGoogle = () => {
   //   console.log("loginByGoogle");
@@ -197,7 +199,12 @@ const AuthForm = () => {
           {/* Submit button */}
           <button
             type="submit"
-            className="w-full p-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600"
+            disabled={!isValid}
+            className={`w-full p-3 rounded-lg ${
+              isValid
+                ? "bg-primary-500 text-white hover:bg-primary-600"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }`}
           >
             {isSignUp ? "Sign Up" : "Login"}
           </button>
