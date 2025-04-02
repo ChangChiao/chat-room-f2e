@@ -1,9 +1,5 @@
+import { ApiResponse } from "../models";
 import axiosInstance from "./axios";
-
-interface ApiResponse<T> {
-  data: T;
-  message?: string;
-}
 
 interface User {
   id: number;
@@ -11,15 +7,24 @@ interface User {
   email: string;
 }
 
-export const userApi = {
-  // 獲取用戶信息
-  getCurrentUser: () => {
-    return axiosInstance.get<ApiResponse<User>>("/user/profile");
+export const authApi = {
+  getAuthInfo: () => {
+    return axiosInstance.get<ApiResponse<User>>("/auth/info");
   },
+  signUp: (data: { name: string; email: string; password: string }) => {
+    return axiosInstance.post<ApiResponse<User>>("/auth/signup", data);
+  },
+};
 
-  // 更新用戶信息
-  updateUser: (userData: Partial<User>) => {
-    return axiosInstance.put<ApiResponse<User>>("/user/profile", userData);
+export const userApi = {
+  getCurrentUser: () => {
+    return axiosInstance.get<ApiResponse<User>>("/users");
+  },
+  getAllUsers: () => {
+    return axiosInstance.get<ApiResponse<User[]>>("/users/all");
+  },
+  createUser: (userData: Partial<User>) => {
+    return axiosInstance.post<ApiResponse<User>>("/users", userData);
   },
 };
 
@@ -37,7 +42,6 @@ export const chatApi = {
     );
   },
 
-  // 發送消息
   sendMessage: (roomId: number, content: string) => {
     return axiosInstance.post<ApiResponse<Message>>(
       `/rooms/${roomId}/messages`,
@@ -47,14 +51,3 @@ export const chatApi = {
     );
   },
 };
-
-// 使用示例：
-/*
-try {
-  const user = await userApi.getCurrentUser();
-  console.log('用戶信息：', user);
-} catch (error) {
-  // 錯誤已經在 axios 攔截器中統一處理
-  console.error('獲取用戶信息失敗：', error);
-}
-*/
